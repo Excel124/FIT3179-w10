@@ -151,6 +151,27 @@
               {"field": "properties.POP_EST", "type": "quantitative", "title": "Population", "format": ","}
             ]
           }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "dx": -5,
+            "dy": -5,
+            "fontSize": 12,
+            "fontStyle": "italic"
+          },
+          "encoding": {
+            "longitude": {"field": "longitude", "type": "quantitative"},
+            "latitude": {"field": "latitude", "type": "quantitative"},
+            "text": {"field": "note", "type": "nominal"}
+          },
+          "data": {
+            "values": [
+              {"longitude": 150, "latitude": -13, "note": "Southeast Asia: High immigration rates"},
+              {"longitude": 140, "latitude": -45, "note": "Australia: Significant arrivals"}
+            ]
+          }
         }
       ]
     },
@@ -184,32 +205,52 @@
         },
         {"filter": "datum.rank <= 10"}
       ],
-      "mark": "bar",
-      "encoding": {
-        "y": {
-          "field": "country",
-          "type": "nominal",
-          "sort": "-x",
-          "title": "Country"
+      "layer": [
+        {
+          "mark": "bar",
+          "encoding": {
+            "y": {
+              "field": "country",
+              "type": "nominal",
+              "sort": "-x",
+              "title": "Country"
+            },
+            "x": {
+              "field": "total_arrivals",
+              "type": "quantitative",
+              "title": "Total Arrivals"
+            },
+            "color": {
+              "field": "total_arrivals",
+              "type": "quantitative",
+              "scale": {
+                "scheme": "reds"
+              },
+              "legend": null
+            },
+            "tooltip": [
+              {"field": "country", "type": "nominal", "title": "Country"},
+              {"field": "total_arrivals", "type": "quantitative", "title": "Total Arrivals", "format": ","}
+            ]
+          }
         },
-        "x": {
-          "field": "total_arrivals",
-          "type": "quantitative",
-          "title": "Total Arrivals"
-        },
-        "color": {
-          "field": "total_arrivals",
-          "type": "quantitative",
-          "scale": {
-            "scheme": "reds"
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 5,
+            "dy": -5,
+            "fontSize": 12,
+            "fontStyle": "italic"
           },
-          "legend": null
-        },
-        "tooltip": [
-          {"field": "country", "type": "nominal", "title": "Country"},
-          {"field": "total_arrivals", "type": "quantitative", "title": "Total Arrivals", "format": ","}
-        ]
-      }
+          "encoding": {
+            "y": {"field": "country", "type": "nominal"},
+            "x": {"field": "total_arrivals", "type": "quantitative"},
+            "text": {"value": "Top country for arrivals"}
+          },
+          "transform": [{"filter": "datum.rank == 1"}]
+        }
+      ]
     }
   ]
 }
